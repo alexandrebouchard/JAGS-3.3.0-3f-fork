@@ -1,0 +1,13 @@
+# File for pkg-config
+#
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+jagsincludedir=${prefix}/include/JAGS
+moduledir=${exec_prefix}/lib/JAGS/modules
+
+Name: libjags
+Version: 3.3.0
+Description: JAGS library for Bayesian modelling using MCMC
+Libs: -L${libdir} -ljags
+Cflags: -I${jagsincludedir}

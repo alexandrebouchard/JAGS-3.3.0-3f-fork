@@ -1,0 +1,10 @@
+*.aux
+jags_developer_manual.log
+jags_developer_manual.toc
+jags_user_manual.log
+jags_user_manual.toc
+*.Plo
+*.o
+*.a
+*.la
+*.lo
