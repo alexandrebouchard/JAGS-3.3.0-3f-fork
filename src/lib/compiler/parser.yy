@@ -11,6 +11,8 @@
 #include <vector>
 #include <sstream>
 
+using namespace std;
+
 using std::malloc;
 using std::free;
   
@@ -26,6 +28,7 @@ using std::free;
   static ParseTree *_prelations = 0;
   
   static void setName(ParseTree *p, std::string *name);
+  static void printName(ParseTree *p);
   static void setParameters(ParseTree *p, std::vector<ParseTree*> *parameters);
   static void setParameters(ParseTree *p, ParseTree *param1);
   static void setParameters(ParseTree *p, ParseTree *param1, 
@@ -171,10 +174,13 @@ counter: FOR '(' NAME IN range_element ')' {
 ;
 
 determ_relation: var ARROW expression {
+    printName($1);
     $$ = new ParseTree(P_DETRMREL, yylineno);
     setParameters($$, $1, $3);
 } 
 | FUNC '(' var ')' ARROW expression {
+
+    printName($3);
 
   /* 
      The link function is given using an S-style replacement function
@@ -191,14 +197,17 @@ determ_relation: var ARROW expression {
 ;
 
 stoch_relation:	var '~' distribution {
+    printName($1);
     $$ = new ParseTree(P_STOCHREL, yylineno); 
     setParameters($$, $1, $3);
  }
 | var '~' distribution truncated {
+    printName($1);
     $$ = new ParseTree(P_STOCHREL, yylineno); 
     setParameters($$, $1, $3, $4);
 }
 | var '~' distribution interval {
+    printName($1);
     $$ = new ParseTree(P_STOCHREL, yylineno);
     setParameters($$, $1, $3, $4);
 }
@@ -399,6 +408,11 @@ void setName(ParseTree *p, std::string *name)
   */
   p->setName(*name);
   delete name;
+}
+
+void printName(ParseTree *p)
+{
+    cout << "variable: " << p->name() << "\n";
 }
 	
 
